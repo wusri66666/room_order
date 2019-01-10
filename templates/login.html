@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/Bootstrap_files/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/jquery-ui.css">
+    <script src="/static/Bootstrap_files/jquery.min.js"></script>
+    <script src="/static/jquery-ui.js"></script>
+    <script src="/static/日历中文.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-group">
+        <label for="username">用户名或手机号</label>
+        <input name="username" type="text" class="form-control" id="username" placeholder="用户名或手机号">
+    </div>
+    <div class="form-group">
+        <label for="password">密码</label>
+        <input name="password" type="password" class="form-control" id="password" placeholder="密码">
+    </div>
+    <button id="btn" type="submit" class="btn btn-default">Submit</button>
+</div>
+
+<script>
+    $('#btn').click(function () {
+        var username = $('#username').val()
+        var password = $('#password').val()
+        $.ajax({
+            url:'/app/login/',
+            type:'POST',
+            data:{
+                'username':username,
+                'password':password,
+            },
+            success:function (res) {
+                if(res.code==0){
+                    window.open(res.data)
+                }else{
+                    alert(res.msg)
+                }
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

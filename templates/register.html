@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/Bootstrap_files/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/jquery-ui.css">
+    <script src="/static/Bootstrap_files/jquery.min.js"></script>
+    <script src="/static/jquery-ui.js"></script>
+    <script src="/static/日历中文.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="form-group">
+        <label for="username">用户名</label>
+        <input name="username" type="text" class="form-control" id="username" placeholder="用户名">
+    </div>
+    <div class="form-group">
+        <label for="email">邮箱</label>
+        <input name="email" type="email" class="form-control" id="email" placeholder="邮箱">
+    </div>
+    <div class="form-group">
+        <label for="phone">手机号</label>
+        <input name="phone" type="text" class="form-control" id="phone" placeholder="手机号">
+    </div>
+    <div class="form-group">
+        <label for="password">密码</label>
+        <input name="password" type="password" class="form-control" id="password" placeholder="密码">
+    </div>
+    <div class="form-group">
+        <label for="com_password">确认密码</label>
+        <input name="com_password" type="password" class="form-control" id="com_password" placeholder="确认密码">
+    </div>
+    <button id="btn" type="submit" class="btn btn-default">Submit</button>
+</div>
+<script>
+    $("#btn").click(function () {
+        var username = $('#username').val()
+        var phone = $('#phone').val()
+        var email = $('#email').val()
+        var password = $('#password').val()
+        var com_password = $('#com_password').val()
+        console.log(username)
+        $.ajax({
+            type: 'POST',
+            url: '/app/register/',
+            data: {
+                'username': username,
+                'phone': phone,
+                'email': email,
+                'password': password,
+                'com_password': com_password
+            },
+            success: function (res) {
+                alert(res.msg)
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>查看会议室</title>
+    <link rel="stylesheet" href="/static/Bootstrap_files/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/jquery-ui.css">
+    <style>
+        .ui-datepicker select.ui-datepicker-year{
+            margin-top: 5px;!important;
+            margin-right: 5px;!important;
+        }
+    </style>
+    <script src="/static/Bootstrap_files/jquery.min.js"></script>
+    <script src="/static/jquery-ui.js"></script>
+    <script src="/static/日历中文.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>会议室预定表</h3>
+            <form action="/app/room/"method="post">
+                请选择日期:<input type="text"  class="text"style="margin-bottom: 20px;cursor: pointer"  id="select_date" name="select_date"  readonly="readonly" value={{ select_date }}>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>会议室名称</td>
+                        {% for tup in time_tuple %}
+                            <td>{{ tup.1 }}</td>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for id,dic in new_dic.items %}
+                        <tr>
+                            <td>{{ dic.name }}</td>
+                            {% for s,v in dic.times.items %}
+                                {% if v %}
+                                    <td style="background-color: blue"></td>
+                                {% else %}
+                                    <td><input type="checkbox" name="{{ id }}" value="{{ s }}"></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <input type="submit" value="提交">
+                <a href="/app/quit/">注销</a>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#select_date").change(function () {
+            var select_date=$(this).val();
+            location.href='/app/room/?select_date='+select_date
+        })
+
+{#        引入日历#}
+        $('#select_date').datepicker({
+        yearSuffix:'',
+        changeMonth:true,
+        changeYear:true,
+{#        maxDate:0, 日历显示到今天为止#}
+        dateFormat:'yy-mm-dd',
+        yearRange:'1950:2020',
+        showOtherMonths: true,
+        selectOtherMonths: true
+
+    });
+    })
+</script>
+</body>
+</html>
